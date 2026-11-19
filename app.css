@@ -1,0 +1,129 @@
+:root {
+  --fg: #111; --soft: #555; --line: #c9c9c9; --hair: #e4e4e4; --bg: #fff; --tint: #f3f3f1; --accent: #0b5cad; --mark: #fff3bf;
+  --good: #11743a; --bad: #b3261e; --code: #f5f5f3;
+  --size: 15px; --bar: 52px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #ececec; --soft: #a9a9a9; --line: #4a4d50; --hair: #333638; --bg: #16181a; --tint: #24272a; --accent: #7db8f5; --mark: #5a4a10;
+    --good: #6fcf8f; --bad: #ff8a80; --code: #1f2224; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--bar) + 10px); }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 var(--size)/1.42 "Segoe UI", Roboto, "Noto Sans", system-ui, sans-serif; }
+button, input { font: inherit; color: inherit; }
+button, .btn { background: transparent; border: 1px solid var(--line); border-radius: 7px; padding: 5px 10px; cursor: pointer; min-height: 34px; color: var(--fg); text-decoration: none; display: inline-flex; align-items: center; }
+button:hover, .btn:hover { background: var(--tint); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ic { width: 18px; height: 18px; display: block; }
+
+/* ---------- top bar (same layout as the words dictionary) ---------- */
+#bar { position: sticky; top: 0; z-index: 5; height: var(--bar); display: flex; align-items: center; gap: 6px; padding: 8px max(10px, env(safe-area-inset-right)) 8px max(10px, env(safe-area-inset-left)); background: var(--bg); border-bottom: 1px solid var(--line); }
+.search { flex: 1; min-width: 0; display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 8px; padding: 0 9px; height: 36px; color: var(--soft); }
+.search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--fg); height: 100%; font-size: 16px; }
+.search:focus-within { border-color: var(--accent); }
+.search input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+.search .in { border: 0; min-height: 0; width: 28px; height: 28px; padding: 0; flex: none; display: grid; place-items: center; color: var(--soft); border-radius: 5px; font-size: 17px; line-height: 1; }
+.search input:placeholder-shown ~ #qClear { display: none; }
+.search kbd { display: none; font: 12px/1.4 ui-monospace, Consolas, monospace; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; color: var(--soft); }
+@media (hover: hover) and (pointer: fine) { .search:not(:focus-within) input:placeholder-shown ~ kbd { display: inline-block; } }
+.chip { padding: 4px 8px; font-size: 13px; white-space: nowrap; height: 36px; }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+#where { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
+.icon { padding: 0; width: 36px; height: 36px; display: grid; place-items: center; position: relative; flex: none; }
+.badge-n { position: absolute; top: -5px; right: -5px; min-width: 17px; height: 17px; border-radius: 9px; background: var(--fg); color: var(--bg); font-size: 10.5px; font-weight: 700; display: grid; place-items: center; padding: 0 4px; }
+
+/* ---------- book: one section per lesson, cards in a grid like the printed sheet ---------- */
+#book, #results { max-width: 1180px; margin: 0 auto; padding: 0 12px calc(48px + env(safe-area-inset-bottom)); }
+.lesson { padding-top: 6px; }
+.lesson > h2 { font-size: 1em; font-weight: 700; margin: 14px 0 8px; padding-bottom: 3px; border-bottom: 1.5px solid var(--fg); display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; }
+.lesson > h2 .lc { font: 700 .82em ui-monospace, Consolas, monospace; }
+.lesson > h2 .wk { font-weight: 400; color: var(--soft); font-size: .82em; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: start; }
+@media (min-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- card ---------- */
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 8px 11px 9px; background: var(--bg); min-width: 0; }
+.card.flash { animation: flash 2s ease-out; }
+@keyframes flash { from { background: var(--mark); } to { background: var(--bg); } }
+.ch { display: flex; align-items: center; gap: 6px; padding-bottom: 4px; margin-bottom: 5px; border-bottom: 1px solid var(--hair); }
+.cid { font: 700 12.5px ui-monospace, Consolas, monospace; color: var(--fg); text-decoration: none; letter-spacing: .2px; }
+.cid:hover { color: var(--accent); }
+.typ { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card.np .typ { border-style: dashed; }
+.stars { font-size: 11px; color: var(--soft); white-space: nowrap; }
+.tools { margin-left: auto; display: inline-flex; gap: 1px; flex: none; }
+.tools button { border: 0; padding: 0 3px; min-height: 0; min-width: 30px; height: 30px; display: inline-flex; gap: 2px; align-items: center; justify-content: center; color: var(--soft); border-radius: 5px; font-size: 12px; font-weight: 700; }
+.tools button .ic { width: 16px; height: 16px; }
+.tools button.on { color: #b07800; }
+.tools button.on .ic path { fill: currentColor; }
+.face { cursor: pointer; }
+.front { font-weight: 650; line-height: 1.3; }
+.key { margin-top: 5px; font-weight: 700; padding: 3px 0; border-top: 1px dotted var(--line); border-bottom: 1px dotted var(--line); overflow-wrap: anywhere; }
+.lbl { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: var(--soft); margin-right: 6px; }
+.flip { display: flex; width: 100%; justify-content: center; margin-top: 6px; min-height: 30px; padding: 2px 8px; font-size: 13px; color: var(--soft); border-style: dashed; }
+.card.open .flip { display: none; }
+.back { margin-top: 4px; font-size: .94em; }
+.back[hidden] { display: none; }
+.sec { margin-top: 6px; overflow-wrap: anywhere; }
+.sec p { margin: 2px 0; }
+.sec ul, .sec ol { margin: 2px 0; padding-left: 20px; }
+.sec li { margin: 1px 0; }
+.sec pre { margin: 4px 0; padding: 7px 8px; background: var(--code); border: 1px solid var(--hair); border-radius: 6px; overflow-x: auto; font: 12.5px/1.38 ui-monospace, Consolas, "Cascadia Mono", monospace; white-space: pre; overflow-wrap: normal; }
+.sec code { font: .9em ui-monospace, Consolas, monospace; background: var(--code); border-radius: 3px; padding: 0 3px; }
+.sec blockquote { margin: 3px 0; padding: 2px 0 2px 9px; border-left: 3px solid var(--line); }
+.tw { overflow-x: auto; margin: 4px 0; }
+.sec table { border-collapse: collapse; font-size: .92em; min-width: 100%; }
+.sec th, .sec td { border: 1px solid var(--line); padding: 3px 6px; text-align: left; vertical-align: top; overflow-wrap: normal; }
+.sec th { background: var(--tint); }
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.bad del, del { opacity: .85; }
+.tags { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 4px; }
+.tags a { font-size: 11.5px; color: var(--soft); text-decoration: none; border: 1px solid var(--hair); border-radius: 10px; padding: 0 7px; }
+.tags a:hover { color: var(--accent); border-color: var(--accent); }
+/* ---------- answer of a Phrase card ---------- */
+.key { display: flex; gap: 6px; align-items: baseline; margin: 2px 0 4px; }
+.key p { margin: 0; }
+.arrow { flex: none; }
+.front p { margin: 0 0 3px; }
+.front p:last-child { margin-bottom: 0; }
+.front ul, .front ol { margin: 2px 0; padding-left: 20px; font-weight: 500; }
+.close { display: flex; width: 100%; justify-content: center; margin-top: 7px; min-height: 28px; padding: 2px 8px; font-size: 12.5px; color: var(--soft); border-style: dashed; }
+
+/* ---------- results / my cards ---------- */
+.rhead { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 12px 0 8px; font-size: 13px; color: var(--soft); }
+.rhead .grow { flex: 1; }
+.rhead button, .rhead a.btn { font-size: 12.5px; min-height: 30px; padding: 2px 9px; }
+.rhead button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.lessonhits { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.lessonhits a { font-size: 13px; color: var(--fg); text-decoration: none; border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; }
+.lessonhits a b { font: 700 12px ui-monospace, Consolas, monospace; margin-right: 4px; }
+.nope { margin: 18px 0 6px; color: var(--soft); }
+.minemeta { font-size: 12px; color: var(--soft); margin: -2px 0 4px; display: flex; gap: 8px; align-items: center; }
+.minemeta button { min-height: 0; height: 24px; padding: 0 7px; font-size: 12px; }
+
+/* ---------- dialogs ---------- */
+dialog { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--fg); padding: 0; width: min(560px, calc(100vw - 24px)); max-height: 86vh; }
+dialog::backdrop { background: rgba(0, 0, 0, .4); }
+.dlg { display: flex; flex-direction: column; gap: 9px; padding: 14px; }
+.dlg h2 { margin: 0; font-size: 17px; font-weight: 600; }
+.dlg h3 { margin: 8px 0 0; font-size: 13px; color: var(--soft); font-weight: 600; }
+.row { display: flex; align-items: center; gap: 6px; }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1; min-width: 0; }
+.fine { font-size: 12px; color: var(--soft); margin: 2px 0 0; }
+#lessons h4 { margin: 8px 0 4px; font-size: 12.5px; font-weight: 600; color: var(--soft); }
+#lessons .ls { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 5px; }
+#lessons button { justify-content: flex-start; text-align: left; font-size: 13.5px; padding: 4px 8px; gap: 7px; }
+#lessons button b { font: 700 12px ui-monospace, Consolas, monospace; }
+#lessons button.here { border-color: var(--fg); background: var(--tint); }
+#toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 7px 13px; border-radius: 8px; font-size: 14px; z-index: 9; max-width: 90vw; }
+[hidden] { display: none !important; }
+
+@media (max-width: 420px) {
+  #bar { gap: 5px; padding-left: max(8px, env(safe-area-inset-left)); padding-right: max(8px, env(safe-area-inset-right)); }
+  .chip { padding: 4px 6px; }
+  #book, #results { padding-left: 8px; padding-right: 8px; }
+  .card { padding: 7px 9px 8px; }
+}
+@media print { #bar { display: none; } .flip, .tools, .close { display: none !important; } .card { break-inside: avoid; } }

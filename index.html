@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Writing Cards</title>
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16181a" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM19.4 13.5l1.6 1.2-2 3.4-1.9-.7a7 7 0 0 1-1.7 1l-.3 2h-4l-.3-2a7 7 0 0 1-1.7-1l-1.9.7-2-3.4 1.6-1.2a7 7 0 0 1 0-2L3 10.3l2-3.4 1.9.7a7 7 0 0 1 1.7-1l.3-2h4l.3 2a7 7 0 0 1 1.7 1l1.9-.7 2 3.4-1.6 1.2a7 7 0 0 1 0 2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 5.5v-1a1.5 1.5 0 0 0-1.5-1.5H6a1.5 1.5 0 0 0-1.5 1.5V14A1.5 1.5 0 0 0 6 15.5h1" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header id="bar">
+  <label class="search">
+    <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+    <input id="q" type="search" placeholder="Code, phrase, topic, tiếng Việt" aria-label="Search"
+           autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search">
+    <kbd class="hint" title="Press / or Ctrl+K to search">/</kbd>
+    <button id="qClear" class="in" type="button" aria-label="Clear search">×</button>
+  </label>
+  <button id="backAll" class="chip" type="button" aria-pressed="false" title="Show or hide the back of every card">Back</button>
+  <button id="where" class="chip" type="button" title="Go to a lesson">W00</button>
+  <button id="mine" class="icon" type="button" aria-label="My cards" title="My cards (★)"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span id="mineCount" class="badge-n" hidden></span></button>
+  <button id="gear" class="icon" type="button" aria-label="Settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg></button>
+</header>
+
+<main id="book" aria-label="Cards in book order"></main>
+<section id="results" aria-live="polite" hidden></section>
+
+<dialog id="jump">
+  <form method="dialog" class="dlg">
+    <div class="row"><h2 class="grow">Go to a lesson</h2><button value="close">Close</button></div>
+    <div id="lessons"></div>
+  </form>
+</dialog>
+
+<dialog id="settings">
+  <form method="dialog" class="dlg">
+    <h2>Settings</h2>
+    <div class="row"><span class="grow">Text size</span><button id="sizeDown" type="button" aria-label="Smaller text">A−</button><button id="sizeUp" type="button" aria-label="Larger text">A+</button></div>
+    <div class="row"><label class="grow"><input id="setBack" type="checkbox"> Show the back of every card</label></div>
+    <div class="row"><label class="grow"><input id="setExtra" type="checkbox"> Also show E cards (Error, not on paper)</label></div>
+    <p class="fine">S = Structure (frame, rule) · P = Phrase (fill the gap, answer on the back) · E = Error (find the mistake). The paper cards have S and P only.</p>
+    <h3>Other</h3>
+    <div class="row wrap"><a class="btn" href="https://joyfulsteps.github.io/ielts-grammar-cards/" target="_blank" rel="noopener">Grammar cards ↗</a><a class="btn" href="https://joyfulsteps.github.io/english-words-dictionary/" target="_blank" rel="noopener">Words dictionary ↗</a></div>
+    <p class="fine">Cards are AI-written study notes. <span id="build"></span></p>
+    <div class="row"><span class="grow"></span><button value="close">Close</button></div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" hidden></div>
+<noscript><p style="padding:1rem">This page needs JavaScript.</p></noscript>
+<script src="search.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
